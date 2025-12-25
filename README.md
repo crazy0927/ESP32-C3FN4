@@ -1,62 +1,39 @@
-# ESP32-C3 WS2812 LED 控制開發紀錄 (2025-12-25)
+# ESP32-C3 WiFi LED 控制器
 
-## 1. 專案背景
-在本專案中，我們嘗試在 **ESP32-C3** 開發板上透過新版 **Arduino ESP32 Core 3.x** 驅動 WS2812B RGB LED 燈條。
+這是一個基於 **ESP32-C3** 的物聯網 (IoT) 燈光控制專案，可以透過網頁瀏覽器遠端切換 WS2812B (Rainbow Ring) 的多種動態效果。
 
-## 2. 核心問題與測試過程
-今天我們經歷了漫長的調試過程，主要挑戰在於 ESP32-C3 的 WiFi 功能與 LED 訊號時脈之間的衝突。
+## 🚀 功能特點
+* **網頁控制專屬介面**：美觀的深色系 Web UI。
+* **五種燈光模式**：全部點亮、全部熄滅、動態彩虹、順時針跑馬燈、逆時針跑馬燈。
+* **安全保護**：將 WiFi 憑據隔離在 `secrets.h` 中，防止外洩至代碼倉庫。
+* **非阻塞設計**：使用 `millis()` 控制動畫，網頁反應即時不卡頓。
 
-### 階段一：Adafruit NeoPixel 的挫敗 (錯誤多次)
-*   **現象**：LED 無法穩定熄滅，或是點亮後出現亂碼（隨機顏色閃爍）。
-*   **探究原因**：
-    *   `Adafruit_NeoPixel` 使用的是 bit-banging 技術（軟體模擬時序）。
-    *   在 ESP32-C3 Core 3.x 中，背景系統任務（如 WiFi）會中斷軟體計時，導致發送給 LED 的 0/1 訊號變形。
-*   **嘗試過的補償方案**：
-    *   強制關閉 WiFi。
-    *   連續發送 5 次 `show()` 脈衝（Step 40 策略）。
-    *   調整系統時脈設定。
-    *   *結論*：雖然有改善，但依然不夠完美。
-
-### 階段二：轉向 Freenove RMT 方案 (成功關鍵)
-*   **切換函式庫**：引入 `Freenove_WS2812_Lib_for_ESP32`。
-*   **成功原因**：
-    *   此函式庫使用 ESP32 內建的 **RMT (Remote Control Peripheral)** 硬體模組。
-    *   RMT 是硬體級的發射器，擁有獨立的緩衝區與時脈，不會被 CPU 的 WiFi 任務中斷。
-*   **最終結果**：**完全控制**。指令 `0` (熄滅)、`1` (點亮)、`2` (彩虹) 均能 100% 精準執行。
-
----
-
-## 3. 程式碼分析 (WIFI_Rainbow_RGB.ino)
-
-### 關鍵宣告
-```cpp
-#include "Freenove_WS2812_Lib_for_ESP32.h"
-#define CHANNEL 0 // 使用 RMT 硬體通道 0
-Freenove_ESP32_WS2812 strip = Freenove_ESP32_WS2812(NUM_LEDS, LED_PIN, CHANNEL, TYPE_GRB);
+## 📊 系統運作流程圖
+```mermaid
+graph TD
+    A[系統啟動 Setup] --> B{WiFi 連線?}
+    B -- 成功 --> C[啟動 Web Server]
+    B -- 失敗 --> D[僅開啟 Serial 控制]
+    C --> E[等待使用者操作 Loop]
+    D --> E
+    E --> F{收到指令?}
+    F -- 點開網頁按鈕 --> G[切換 LED 模式]
+    F -- 序列埠輸入 0-4 --> G[切換 LED 模式]
+    G --> H[執行對應動畫/動作]
+    H --> E
 ```
-這段決定了使用硬體驅動而非軟體模擬。
 
-### 功能模組
-1.  **WiFi 初始化**：
-    ```cpp
-    WiFi.mode(WIFI_STA);
-    WiFi.setSleep(false);
-    ```
-    即便開啟 WiFi，LED 訊號依然穩定。
-2.  **指令系統**：
-    *   `'1'`：靜態綠色。
-    *   `'0'`：全滅。
-    *   `'2'`：動態彩虹 Flag 開關。
-3.  **彩虹演算法**：
-    透過 `strip.Wheel()` 配合不斷累積的 `rainbowStep` 實現色彩循環，並在 `loop()` 中以 `delay(10)` 維持動畫流暢度。
+## 🛠️ 安裝與開發環境
+1. **硬體**：使用 ESP32-C3 開發板 + WS2812B 12 顆燈環。
+2. **所需函式庫**：
+   - `Freenove_WS2812_Lib_for_ESP32` (請於 Arduino IDE 函式庫管理員搜尋安裝)。
+3. **安全設定**：
+   - 將目錄下的 `secrets.h.example` 重新命名為 `secrets.h`。
+   - 在 `secrets.h` 中填入您的 WiFi SSID 與密碼。
+
+## 📸 網頁控制介面預覽
+連線成功後，請在瀏覽器輸入 Serial Monitor 顯示的 IP 位址（例如 `http://192.168.x.x`）。
 
 ---
-
-## 4. 總結與心得
-*   **硬體驅動 > 軟體模擬**：在 ESP32 等多任務系統上，優先選擇 RMT 硬體驅動。
-*   **亮度控制**：設定 `BRIGHTNESS 10` 既美觀又保護硬體。
-*   **今日結論**：經歷了 Adafruit 函式庫多次失敗的震撼教育後，最終確認 **Freenove RMT** 是 ESP32-C3 LED 控制的終極解答。
-
----
-**紀錄日期**：2025-12-25  
-**狀態**：已更新至 GitHub (v14.0)
+**版本：v15.2 [IoT LED Controller]**  
+*由 Antigravity 輔助開發*

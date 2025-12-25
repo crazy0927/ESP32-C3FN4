@@ -1,0 +1,6 @@
+# Arduino 忽略檔案
+/build/
+/libraries/
+
+# 敏感資訊 (非常重要！)
+secrets.h
