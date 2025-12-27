@@ -1,6 +1,6 @@
 # ESP32-C3 IoT 終極番茄時鐘站 (Pomo-Clock v18.1)
 
-[繁體中文](#繁體中文) | [English](#english) | [日本語](#日本語) | [Русский](#русский)
+[繁體中文](#繁體中文) | [English](#english) | [日本語](#日本語) | [Русский](#русский) | [Italiano](#italiano) | [Français](#français)
 
 ---
 
@@ -25,47 +25,69 @@
 An ultimate **ESP32-C3** IoT device designed for deep focus and efficient time management.
 
 ### 🌟 Key Features
-*   **🕒 NTP Network Clock**: Accurate time synchronization with elegant White(H), Cyan(M), and Red(S) hands.
-*   **📱 Modern Web UI**: New Dark Mode dashboard featuring real-time progress bars and remote timer configuration.
-*   **� Dynamic Visuals**: "Blinking" effect in custom timer mode to distinguish it from steady clock/pomodoro modes.
+*   **🕒 NTP Network Clock**: Accurate time synchronization with White(H), Cyan(M), and Red(S) hands.
+*   **📱 Modern Web UI**: New Dark Mode dashboard with real-time progress bars.
+*   **💜 Dynamic Visuals**: "Blinking" effect in custom timer mode.
 
 ### 📊 Operation Guide (Button GPIO 9)
-*   **Short Press**: Cycle modes (Clock > 12m > 24m > 36m > 6m > Custom Purple Mode).
-*   **Purple Setup**: Click to add time (+5min/LED) when in purple mode. Wait 2s to start automatically.
-*   **Long Press**: 1s to force turn off all LEDs.
+*   **Short Press**: Cycle modes (Clock > 12m > 24m > 36m > 6m > Custom Purple).
+*   **Purple Setup**: Click to add time (+5min/LED). Wait 2s to start.
+*   **Long Press**: 1s to force turn off.
 
 ---
 
 <a name="日本語"></a>
 ## 🇯🇵 日本語
-深い集中と効率的な時間管理のために設計された **ESP32-C3** IoT デバイスです。
+集中力向上と時間管理のための **ESP32-C3** IoT デバイスです。
 
-### 🌟 主な機能
-*   **🕒 NTP ネットワーク時計**: NTP による自動時刻合わせ。白(時)、シアン(分)、赤(秒)の優雅な表示。
-*   **📱 新しい Web UI**: ダークモード対応のダッシュボード。リアルタイム進捗バーとリモートタイマー設定をサポート。
-*   **💜 動的な表示**: カスタムタイマーモードでは LED が「点滅」し、集中モードと区別されます。
-
-### 📊 操作ガイド (物理ボタン GPIO 9)
-*   **短押し**: モード切替 (時計 > 12分 > 24分 > 36分 > 6分 > カスタム紫モード)。
-*   **紫モード設定**: 紫モード中にクリックで時間を追加 (各LED+5分)。2秒間静止で自動開始。
-*   **長押し**: 1秒押しで LED を強制消灯。
+### 🌟 特徴
+*   **🕒 NTP 時計**: 自動時刻合わせ機能搭載。
+*   **📱 モダンな Web UI**: リアルタイム進捗バー付きダッシュボード。
+*   **💜 動的表示**: カスタムタイマーでの点滅エフェクト。
 
 ---
 
 <a name="Русский"></a>
 ## 🇷🇺 Русский
-Максимальное IoT-устройство на базе **ESP32-C3** для глубокой концентрации и эффективного управления временем.
+IoT-устройство **ESP32-C3** для концентрации и управления временем.
 
-### 🌟 Основные функции
-*   **🕒 Сетевые часы NTP**: Автоматическая синхронизация времени с элегантным отображением: белый (час), голубой (мин) и красный (сек).
-*   **📱 Современный Web-интерфейс**: Новая темная тема с индикатором прогресса в реальном времени и удаленной настройкой таймера.
-*   **💜 Динамическая индикация**: Эффект «мигания» в пользовательском режиме таймера для отличия от режима часов.
-
-### � Руководство (Кнопка GPIO 9)
-*   **Короткое нажатие**: Циклическое переключение (Часы > 12м > 24м > 36м > 6м > Пурпурный режим).
-*   **Пурпурная настройка**: В пурпурном режиме нажимайте для добавления времени (+5 мин на LED). Подождите 2 сек для запуска.
-*   **Длительное нажатие**: 1 сек для принудительного выключения всех светодиодов.
+### 🌟 Особенности
+*   **🕒 Сетевые часы**: Точная синхронизация через NTP.
+*   **📱 Web-интерфейс**: Темная тема с индикатором прогресса.
+*   **💜 Динамика**: Мигание в режиме настраиваемого таймера.
 
 ---
-**Version: v18.1 [Multilingual-Release]**  
-*Developed with Antigravity. Built for the ultimate desktop workspace.*
+
+<a name="italiano"></a>
+## 🇮🇹 Italiano
+Un dispositivo IoT **ESP32-C3** definitivo per la concentrazione profonda e la gestione del tempo.
+
+### 🌟 Caratteristiche Principali
+*   **� Orologio NTP**: Sincronizzazione precisa con lancette eleganti in Bianco(H), Ciano(M) e Rosso(S).
+*   **📱 Web UI Moderna**: Dashboard in Dark Mode con barre di avanzamento in tempo reale.
+*   **💜 Visuali Dinamiche**: Effetto "lampeggiante" nella modalità timer personalizzato.
+
+### 📊 Guida Operativa (Pulsante GPIO 9)
+*   **Pressione Breve**: Ciclo modalità (Orologio > 12m > 24m > 36m > 6m > Viola Personalizzato).
+*   **Setup Viola**: Clicca per aggiungere tempo (+5min/LED). Attendi 2s per l'avvio automatico.
+*   **Pressione Lunga**: 1s per lo spegnimento forzato.
+
+---
+
+<a name="français"></a>
+## 🇫🇷 Français
+L'appareil IoT **ESP32-C3** ultime pour une concentration profonde et une gestion efficace du temps.
+
+### 🌟 Fonctionnalités Clés
+*   **🕒 Horloge NTP**: Synchronisation précise avec des aiguilles élégantes : Blanc(H), Cyan(M) et Rouge(S).
+*   **📱 Interface Web Moderne**: Tableau de bord en mode sombre avec barres de progression.
+*   **💜 Visuels Dynamiques**: Effet "clignotant" en mode minuterie personnalisée.
+
+### 📊 Guide d'Utilisation (Bouton GPIO 9)
+*   **Appui Court**: Cycle des modes (Horloge > 12m > 24m > 36m > 6m > Mode Violet).
+*   **Config Violette**: Cliquez pour ajouter du temps (+5min/LED). Attendez 2s pour démarrer.
+*   **Appui Long**: 1s pour l'extinction forcée.
+
+---
+**Version: v18.1 [World-Edition]**  
+*Developed with Antigravity. Built for the global developer community.*
